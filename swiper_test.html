@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- swiper用css読み込み -->
+    <link rel="stylesheet" href="swiper-bundle.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Swiper.js TEST</title>
+</head>
+<body>
+    <!-- サンプルURL  -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+        <div class="swiper-slide swiper-slide-0"><img src="https://haniwaman.com/wp/wp-content/uploads/2018/05/swiper01.png" alt="Swiper01"></div>
+        <div class="swiper-slide swiper-slide-1"><img src="https://haniwaman.com/wp/wp-content/uploads/2018/05/swiper02.png" alt="Swiper02"></div>
+        <div class="swiper-slide swiper-slide-2"><img src="https://haniwaman.com/wp/wp-content/uploads/2018/05/swiper03.png" alt="Swiper03"></div>
+        <div class="swiper-slide swiper-slide-3"><img src="https://haniwaman.com/wp/wp-content/uploads/2018/05/swiper04.png" alt="Swiper04"></div>
+        <div class="swiper-slide swiper-slide-4"><video src="https://haniwaman.com/wp/wp-content/uploads/2018/05/swiper5.mp4" loop muted></video></div><!-- 動画 -->
+        </div>
+        <div class="swiper-pagination"></div><!-- スライダーの枚数と現在の番号を所得 -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+    <!-- swiper用js読み込み -->
+    <script src="swiper-bundle.js"></script>
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+        },
+        loop: true,//スライダーの最後までいったら先頭に戻る
+        pagination: {
+            el: '.swiper-pagination',
+            type: 'bullets',//設定は全3種（type: 'franction'）（type: 'progressbar'）
+            clickable: true,
+        },
+        /*speed: 200,スライド速度を変更*/
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: true,
+        },//スライダーを自動再生
+        autoHeight: true,//画像のサイズが不揃いの時に自動で高さを調整
+        //スライドに応じて動画の再生を操作
+        on: {
+            slideChange: function () {
+            jQuery('.swiper-wrapper').find('video').each(function( index, value ) {
+                jQuery(this).get(0).pause();
+            });
+            realIndex = this.realIndex;
+            slideClass = jQuery('.swiper-slide-' + realIndex);
+            video = slideClass.find('video');
+            if ( video.length ) {
+                video.get(0).play();
+            }
+            },
+        },
+    });
+    </script>
+</body>
+</html>
